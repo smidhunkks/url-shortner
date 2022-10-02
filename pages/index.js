@@ -1,14 +1,11 @@
-import Head from "next/head";
-import Image from "next/image";
-
-import InputFields from "./InputFields";
+import HeroSection from "./HeroSection";
 import Navbar from "./navbar";
 
 export default function Home() {
   return (
     <div>
       <Navbar />
-      <InputFields />
+      <HeroSection />
     </div>
   );
 }

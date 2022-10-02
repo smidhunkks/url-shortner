@@ -1,15 +1,14 @@
-import React from 'react'
+import React from "react";
 
 function Navbar() {
   return (
-    <div className='nav'>
-      <div className='nav-logo'>Logo</div>
-      <div className='nav-actions'>
-        actions
+    <div className="nav">
+      <div className="nav-logo">Logo</div>
+      <div className="nav-actions">
+        <img src="/profile.svg" alt="avatar" className="nav-profile" />
       </div>
-      
-      </div>
-  )
+    </div>
+  );
 }
 
-export default Navbar
+export default Navbar;
