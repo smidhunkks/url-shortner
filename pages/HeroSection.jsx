@@ -2,7 +2,11 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import { ReactComponent as shortnerLogo } from "../public/LinkshortnerIcon.svg";
 
-function handleShortenClick(longUrl) {
+async function handleShortenClick(longUrl) {
+  const response = await fetch("/api/Shorten");
+  const {name}=await response.json();
+  console.log(name);
+
   var code = 452554;
 
   var base36string = [];
@@ -40,7 +44,6 @@ function HeroSection() {
           eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem Ipsum
           dolor sit amet
         </p>
-     
 
         <div className="hero-input">
           <div className="input-wrapper">
@@ -59,6 +62,7 @@ function HeroSection() {
             onClick={(e) => {
               e.preventDefault();
               console.log(inputref.current.value);
+              handleShortenClick(inputref.current.value);
             }}
           >
             Shorten
