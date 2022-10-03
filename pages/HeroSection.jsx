@@ -40,7 +40,7 @@ function HeroSection() {
           eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem Ipsum
           dolor sit amet
         </p>
-        <p>Paste your url here</p>
+     
 
         <div className="hero-input">
           <div className="input-wrapper">
@@ -51,21 +51,18 @@ function HeroSection() {
               id=""
               ref={inputref}
               className="input-field"
-              placeholder="eg:https://www.google.com/"
+              placeholder="Paste your url here"
             />
-            
-              
-            
           </div>
           <button
-                className="hero-submit"
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log(inputref.current.value);
-                }}
-              >
-                Shorten
-              </button>
+            className="hero-submit"
+            onClick={(e) => {
+              e.preventDefault();
+              console.log(inputref.current.value);
+            }}
+          >
+            Shorten
+          </button>
         </div>
       </div>
       <div className="hero-right">
