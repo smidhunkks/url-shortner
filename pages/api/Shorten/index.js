@@ -1,5 +1,5 @@
 function handler(req, res) {
-  res.status(200).json({ name: "Hpme" });
+  res.status(200).json({ name: "Home" });
 }
 
 export default handler;
