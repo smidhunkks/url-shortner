@@ -1,5 +1,5 @@
 import connection from "../db";
-import {  UpdateTinyUrl, insertUrl } from "../service/dbservice";
+import { UpdateTinyUrl, insertUrl } from "../service/dbservice";
 
 function idtoTinyurl(code) {
   var base36string = [];
@@ -30,18 +30,15 @@ async function handler(req, res) {
   // connection.query('insert into urls (url) values ("hello world")')
   if (req.method === "POST") {
     try {
-     
       const response = await insertUrl(req.body.longUrl);
-
-      const tinyUrl =await idtoTinyurl(response.insertId);
-     // console.log(tinyUrl, response.insertId);
-
-      const updateresponse = await  UpdateTinyUrl(tinyUrl, response.insertId);
-      console.log("updated response : " + updateresponse);
-
-      res.status(201).json(response);
+      console.log(response);
+      if ((response[0].serverStatus === response[0].serverStatus) === 2) {
+        res.status(201).json(response);
+      }else{
+        res.status(400).json(response);
+      }
     } catch (error) {
-      res.status(error.status);
+      res.status(403).json({"message": error.message});
     }
     // insertUrl(req.body.longUrl)
     //   .then((response) => {
