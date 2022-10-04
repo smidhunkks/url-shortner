@@ -3,11 +3,17 @@ import React, { useRef } from "react";
 import { ReactComponent as shortnerLogo } from "../public/LinkshortnerIcon.svg";
 
 async function handleShortenClick(longUrl) {
-  const response = await fetch("/api/Shorten");
-  const {name}=await response.json();
+  const response = await fetch("/api/Shorten", {
+    method: "POST",
+    body: JSON.stringify({ longUrl }),
+    headers:{
+      'content-type': 'application/json',
+    }
+  });
+  const  name  = await response.json();
   console.log(name);
 
-  var code = 452554;
+  var code = 1;
 
   var base36string = [];
   var shortenedURL = "";
