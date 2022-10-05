@@ -31,7 +31,7 @@ async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const response = await insertUrl(req.body.longUrl);
-      console.log(response);
+      
       if ((response[0].serverStatus === response[0].serverStatus) === 2) {
         res.status(201).json(response);
       }else{
