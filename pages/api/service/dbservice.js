@@ -3,22 +3,26 @@ const idtoTinyurl = require("./idtourl");
 
 const checkExistence = async (longUrl) =>
   await new Promise((resolve, reject) => {
-    pool.getConnection((err, connection) => {
-      if(err) throw err;
-      connection.query(
+    pool.getConnection((err, dbconnection) => {
+      if (err) throw err;
+      dbconnection.query(
         "select * from urls where url=?",
         [longUrl],
         async (err, result) => {
           if (err) reject(err);
-          if (result.length > 0) resolve(result);
+          if (result.length > 0)
+            resolve({
+              status: 200,
+              insertId: result[0].id,
+            });
           else {
             const insertResponse = await insertUrl(longUrl);
-            console.log("below insert response", insertResponse)
-            
-            const shorturl=await getShortUrl(insertResponse.insertId);
-            console.log("inside check existence");
-            console.log(shorturl);
-            resolve(shorturl);
+            console.log("below insert response", insertResponse);
+
+            // const shorturl = await getShortUrl(insertResponse.insertId);
+            // console.log("inside check existence");
+            // console.log(shorturl);
+            resolve(insertResponse);
           }
         }
       );
@@ -30,7 +34,7 @@ const insertUrl = async (longUrl) => {
   // console.log(check);
   return await new Promise(function (resolve, reject) {
     pool.getConnection((err, connection) => {
-      if(err) throw err;
+      if (err) throw err;
       connection.query(
         "insert into urls (url) values (?);",
         [longUrl],
@@ -44,8 +48,8 @@ const insertUrl = async (longUrl) => {
               result.insertId
             );
             if (updateresult.serverStatus === 2 && result.serverStatus === 2)
-              resolve(result);
-            else reject(result);
+              resolve({ status: 200, ...result });
+            else reject({ status: 401, ...result });
           }
         }
       );
@@ -64,7 +68,7 @@ const UpdateTinyUrl = async (tinyUrl, id) =>
         (err, result) => {
           if (err) reject(err);
           console.log(result);
-          resolve(result);
+          resolve({ status: 200, ...result });
         }
       );
       connection.release();
@@ -81,26 +85,47 @@ const getLongUrl = async (shortUrl) =>
         (err, result) => {
           if (err) reject(err);
           console.log(result);
-          resolve(result);
+          resolve({ status: 200, ...result });
         }
       );
       connection.release();
     });
   });
 
-const getShortUrl = async (id) => {
-  await new Promise((resolve, reject) => {
+const getShortUrl = 
+// async (id) =>
+// await new Promise((resolve, reject) => {
+//   pool.getConnection((err, connection) => {
+//     if (err) throw err;
+//     connection.query(
+//       "select * from urls where id=?",
+//       [id],
+//       (err, result) => {
+//         if (err) reject(err);
+//         console.log(result);
+//         resolve({ status: 200, ...result[0] });
+//       }
+//     );
+//     connection.release();
+//   });
+// });
+
+async (id) => {
+ return await new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query("select * from urls where id=?", [id], (err, result) => {
         if (err) reject(err);
-        console.log("inside getshorturl "+result);
-        console.log(result);
-        resolve(result);
+        // console.log("inside getshorturl " + result);
+        // console.log(result);
+        if (result.length > 0) resolve({ status: 200, ...result[0] });
+        else {
+          reject({ status: 404, message: "Url not found" });
+        }
       });
-      connection.release();
+     // connection.release();
     });
   });
 };
 
-module.exports = { checkExistence, getLongUrl };
+module.exports = { checkExistence, getLongUrl, getShortUrl };

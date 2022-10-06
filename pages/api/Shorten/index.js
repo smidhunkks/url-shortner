@@ -1,5 +1,5 @@
 import connection from "../db";
-import { checkExistence } from "../service/dbservice";
+import { checkExistence, getShortUrl } from "../service/dbservice";
 
 // function idtoTinyurl(code) {
 //   var base36string = [];
@@ -31,27 +31,16 @@ async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const response = await checkExistence(req.body.longUrl);
-      console.log("inside shorten/indexjs")
-      console.log(response);
-      // if (response) {
-      //   res.status(201).json(response);
-      // }else{
-      //   res.status(400).json(response);
-      // }
+      // console.log("inside shorten/indexjs");
+      // console.log(response);
+      if (response.status === 200) {
+        const shorturl = await getShortUrl(response.insertId);
+        // console.log("shorturl "+shorturl);
+        // console.log(shorturl);
+      }
     } catch (error) {
-      res.status(403).json({"message": error});
+      res.status(403).json({ message: error });
     }
-    // insertUrl(req.body.longUrl)
-    //   .then((response) => {
-    //     //console.log(response);
-
-    //     res.status(201).json(response);
-
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     res.status(err.code);
-    //   });
   }
 }
 
