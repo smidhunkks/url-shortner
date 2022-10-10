@@ -1,16 +1,22 @@
 import Image from "next/image";
-import React, { useRef } from "react";
+import { useRouter } from "next/router";
+import React, { useRef, useState } from "react";
 import { ReactComponent as shortnerLogo } from "../public/LinkshortnerIcon.svg";
 
 async function handleShortenClick(longUrl) {
   const response = await fetch("/api/Shorten", {
     method: "POST",
     body: JSON.stringify({ longUrl }),
-    headers:{
-      'content-type': 'application/json',
-    }
+    headers: {
+      "content-type": "application/json",
+    },
   });
-  const  name  = await response.json();
+  const shortnerReponse = await response.json();
+  return shortnerReponse;
+  console.log("inside herosection>handleshortenclick :" + name);
+  console.log(name);
+  
+
   // console.log(name);
 
   // var code = 1;
@@ -40,6 +46,11 @@ async function handleShortenClick(longUrl) {
 }
 
 function HeroSection() {
+  const context = useRouter();
+  const [shortUrl, setshortUrl] = useState();
+  console.log("context: " + context);
+  console.log(context);
+
   const inputref = useRef(null);
   return (
     <div className="hero-section">
@@ -65,15 +76,45 @@ function HeroSection() {
           </div>
           <button
             className="hero-submit"
-            onClick={(e) => {
+            onClick={async(e) => {
               e.preventDefault();
-              console.log(inputref.current.value);
-              handleShortenClick(inputref.current.value);
+              //console.log(inputref.current.value);
+              const shortnerResponse=await handleShortenClick(inputref.current.value);
+              setshortUrl(shortnerResponse.host+"/"+shortnerResponse.shorturl)
+
             }}
           >
             Shorten
           </button>
         </div>
+        {shortUrl && (
+          <div className="hero-output">
+            <p>
+              Your short URL : 
+            </p>
+            <div className="input-wrapper">
+              <img src="/link.png" alt="" className="input-url-icon" />
+              <input
+                type="text"
+                name="ShortUrl"
+                id=""
+                
+                value={shortUrl}
+                className="input-field"
+              />
+            </div>
+            <button
+              className="hero-submit"
+              onClick={async(e) => {
+                e.preventDefault();
+                //console.log(inputref.current.value);
+                navigator.clipboard.writeText(shortUrl)
+              }}
+            >
+              Copy
+            </button>
+          </div>
+        )}
       </div>
       <div className="hero-right">
         <img src="/LinkshortnerIcon.svg" alt="" className="hero-logo" />

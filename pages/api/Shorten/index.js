@@ -35,8 +35,9 @@ async function handler(req, res) {
       // console.log(response);
       if (response.status === 200) {
         const shorturl = await getShortUrl(response.insertId);
-        // console.log("shorturl "+shorturl);
-        // console.log(shorturl);
+        // console.log("shorturl " + shorturl);
+        // console.log(shorturl, req.headers.host);
+        res.status(200).json({ ...shorturl, host: req.headers.host });
       }
     } catch (error) {
       res.status(403).json({ message: error });

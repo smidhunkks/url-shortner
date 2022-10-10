@@ -84,6 +84,13 @@ a {
   align-items: center;
   margin-top: 1rem;
 }
+.hero-output {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 1rem;
+}
 .input-wrapper {
   display: flex;
   flex-direction: row;
@@ -107,4 +114,35 @@ a {
   background: none;
   text-decoration: none;
   outline: none;
+}
+.hero-output .input-field {
+  width: 20rem;
+  border: 0;
+  background: none;
+  text-decoration: none;
+  outline: none;
+}
+.hero-output .input-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  background: rgb(224, 224, 224);
+  border: none;
+  /* margin-right: 1rem; */
+  padding: 0.85rem 1rem;
+  margin-top: 0.1rem;
+  color: rgb(108, 108, 108);
+  box-shadow: none;
+}
+.hero-output .hero-submit{
+  background: rgb(168, 168, 168);
+  outline: none;
+  color: white;
+  margin-left: -2.5rem;
+  padding: 0.98rem 2rem;
+  border-radius: 2rem;
+  border: none;
+  box-shadow: 5px 10px 15px #e3e3e398;
 }
