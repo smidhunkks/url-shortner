@@ -85,33 +85,15 @@ const getLongUrl = async (shortUrl) =>
         (err, result) => {
           if (err) reject(err);
           console.log(result);
-          resolve({ status: 200, ...result });
+          resolve({ status: 200, ...result[0] });
         }
       );
       connection.release();
     });
   });
 
-const getShortUrl = 
-// async (id) =>
-// await new Promise((resolve, reject) => {
-//   pool.getConnection((err, connection) => {
-//     if (err) throw err;
-//     connection.query(
-//       "select * from urls where id=?",
-//       [id],
-//       (err, result) => {
-//         if (err) reject(err);
-//         console.log(result);
-//         resolve({ status: 200, ...result[0] });
-//       }
-//     );
-//     connection.release();
-//   });
-// });
-
-async (id) => {
- return await new Promise((resolve, reject) => {
+const getShortUrl = async (id) => {
+  return await new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query("select * from urls where id=?", [id], (err, result) => {
@@ -123,7 +105,7 @@ async (id) => {
           reject({ status: 404, message: "Url not found" });
         }
       });
-     // connection.release();
+      // connection.release();
     });
   });
 };

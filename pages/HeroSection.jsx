@@ -48,8 +48,8 @@ async function handleShortenClick(longUrl) {
 function HeroSection() {
   const context = useRouter();
   const [shortUrl, setshortUrl] = useState();
-  console.log("context: " + context);
-  console.log(context);
+  // console.log("context: " + context);
+  // console.log(context);
 
   const inputref = useRef(null);
   return (

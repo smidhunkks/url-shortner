@@ -14,10 +14,10 @@ export const getServerSideProps = async (context) => {
   // const longUrl=await longUrlResponse.json();
   console.log("long url" + longUrlResponse);
   console.log(longUrlResponse);
-  if(longUrlResponse.length>0)
+  if(longUrlResponse.status===200)
   return {
     redirect: {
-      destination: longUrlResponse[0].url,
+      destination: longUrlResponse.url,
     },
     props: { params },
   };
