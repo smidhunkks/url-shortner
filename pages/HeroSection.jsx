@@ -62,13 +62,18 @@ function HeroSection() {
                 e.preventDefault();
                 setisLoading(true);
                 //console.log(inputref.current.value);
-                const shortnerResponse = await handleShortenClick(
-                  inputref.current.value
-                );
-                setshortUrl(
-                  shortnerResponse.host + "/" + shortnerResponse.shorturl
-                );
-                setisLoading(false);
+                if (inputref.current.value != "") {
+                  const shortnerResponse = await handleShortenClick(
+                    inputref.current.value
+                  );
+                  setshortUrl(
+                    shortnerResponse.host + "/" + shortnerResponse.shorturl
+                  );
+                  setisLoading(false);
+                } else {
+                  setshortUrl("Enter a valid url");
+                  setisLoading(false);
+                }
               }}
             >
               Shorten
@@ -86,6 +91,7 @@ function HeroSection() {
                 id=""
                 value={shortUrl}
                 className="input-field"
+                contentEditable="false"
               />
             </div>
             <button
