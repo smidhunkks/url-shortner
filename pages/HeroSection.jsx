@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { ReactComponent as shortnerLogo } from "../public/LinkshortnerIcon.svg";
+import { Spinner } from "reactstrap";
 
 async function handleShortenClick(longUrl) {
   const response = await fetch("/api/Shorten", {
@@ -13,41 +14,12 @@ async function handleShortenClick(longUrl) {
   });
   const shortnerReponse = await response.json();
   return shortnerReponse;
-  console.log("inside herosection>handleshortenclick :" + name);
-  console.log(name);
-  
-
-  // console.log(name);
-
-  // var code = 1;
-
-  // var base36string = [];
-  // var shortenedURL = "";
-  // var digit = 0;
-  // while (code > 0) {
-  //   digit = code % 62;
-  //   base36string.push(digit);
-  //   code = parseInt(code / 62);
-  // }
-
-  // base36string = base36string.reverse();
-
-  //console.log(base36string);
-  // for (let i = 0; i < base36string.length; i++) {
-  //   if (base36string[i] >= 0 && base36string[i] < 26) {
-  //     shortenedURL += String.fromCharCode(base36string[i] + 65);
-  //   } else if (base36string[i] > 25 && base36string[i] < 52) {
-  //     shortenedURL += String.fromCharCode((base36string[i] % 26) + 97);
-  //   } else {
-  //     shortenedURL += String.fromCharCode(base36string[i] - 52 + 48);
-  //   }
-  // }
-  // console.log(shortenedURL);
 }
 
 function HeroSection() {
   const context = useRouter();
   const [shortUrl, setshortUrl] = useState();
+  const [isLoading, setisLoading] = useState(false);
   // console.log("context: " + context);
   // console.log(context);
 
@@ -74,41 +46,54 @@ function HeroSection() {
               placeholder="Paste your url here"
             />
           </div>
-          <button
-            className="hero-submit"
-            onClick={async(e) => {
-              e.preventDefault();
-              //console.log(inputref.current.value);
-              const shortnerResponse=await handleShortenClick(inputref.current.value);
-              setshortUrl(shortnerResponse.host+"/"+shortnerResponse.shorturl)
-
-            }}
-          >
-            Shorten
-          </button>
+          {isLoading ? (
+            <button
+              className="hero-submit"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <Spinner color="white" />
+            </button>
+          ) : (
+            <button
+              className="hero-submit"
+              onClick={async (e) => {
+                e.preventDefault();
+                setisLoading(true);
+                //console.log(inputref.current.value);
+                const shortnerResponse = await handleShortenClick(
+                  inputref.current.value
+                );
+                setshortUrl(
+                  shortnerResponse.host + "/" + shortnerResponse.shorturl
+                );
+                setisLoading(false);
+              }}
+            >
+              Shorten
+            </button>
+          )}
         </div>
         {shortUrl && (
           <div className="hero-output">
-            <p>
-              Your short URL : 
-            </p>
+            <p>Your short URL :</p>
             <div className="input-wrapper">
               <img src="/link.png" alt="" className="input-url-icon" />
               <input
                 type="text"
                 name="ShortUrl"
                 id=""
-                
                 value={shortUrl}
                 className="input-field"
               />
             </div>
             <button
               className="hero-submit"
-              onClick={async(e) => {
+              onClick={async (e) => {
                 e.preventDefault();
                 //console.log(inputref.current.value);
-                navigator.clipboard.writeText(shortUrl)
+                navigator.clipboard.writeText(shortUrl);
               }}
             >
               Copy

@@ -5,7 +5,7 @@ function Navbar() {
     <div className="nav">
       <div className="nav-logo">Logo</div>
       <div className="nav-actions">
-        <img src="/profile.svg" alt="avatar" className="nav-profile" />
+        {/* <img src="/profile.svg" alt="avatar" className="nav-profile" /> */}
       </div>
     </div>
   );

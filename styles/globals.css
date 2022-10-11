@@ -77,6 +77,11 @@ a {
   border: none;
   box-shadow: 5px 10px 15px #e3e3e398;
 }
+
+.hero-submit:hover{
+  background: #766ff9;
+}
+
 .hero-input {
   display: flex;
   flex-direction: row;
@@ -141,7 +146,7 @@ a {
   outline: none;
   color: white;
   margin-left: -2.5rem;
-  padding: 0.98rem 2rem;
+  padding: 0.85rem 2rem;
   border-radius: 2rem;
   border: none;
   box-shadow: 5px 10px 15px #e3e3e398;
