@@ -19,9 +19,6 @@ const checkExistence = async (longUrl) =>
             const insertResponse = await insertUrl(longUrl);
             console.log("below insert response", insertResponse);
 
-            // const shorturl = await getShortUrl(insertResponse.insertId);
-            // console.log("inside check existence");
-            // console.log(shorturl);
             resolve(insertResponse);
           }
         }
@@ -30,8 +27,6 @@ const checkExistence = async (longUrl) =>
   });
 
 const insertUrl = async (longUrl) => {
-  // const check=await checkExistence(longUrl)
-  // console.log(check);
   return await new Promise(function (resolve, reject) {
     pool.getConnection((err, connection) => {
       if (err) throw err;
@@ -98,14 +93,12 @@ const getShortUrl = async (id) => {
       if (err) throw err;
       connection.query("select * from urls where id=?", [id], (err, result) => {
         if (err) reject(err);
-        // console.log("inside getshorturl " + result);
-        // console.log(result);
+
         if (result.length > 0) resolve({ status: 200, ...result[0] });
         else {
           reject({ status: 404, message: "Url not found" });
         }
       });
-      // connection.release();
     });
   });
 };

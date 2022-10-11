@@ -20,8 +20,6 @@ function HeroSection() {
   const context = useRouter();
   const [shortUrl, setshortUrl] = useState();
   const [isLoading, setisLoading] = useState(false);
-  // console.log("context: " + context);
-  // console.log(context);
 
   const inputref = useRef(null);
   return (
@@ -61,7 +59,7 @@ function HeroSection() {
               onClick={async (e) => {
                 e.preventDefault();
                 setisLoading(true);
-                //console.log(inputref.current.value);
+
                 if (inputref.current.value != "") {
                   const shortnerResponse = await handleShortenClick(
                     inputref.current.value
@@ -98,7 +96,7 @@ function HeroSection() {
               className="hero-submit"
               onClick={async (e) => {
                 e.preventDefault();
-                //console.log(inputref.current.value);
+
                 navigator.clipboard.writeText(shortUrl);
               }}
             >
