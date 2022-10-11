@@ -82,7 +82,7 @@ function HeroSection() {
         </div>
         {shortUrl && (
           <div className="hero-output">
-            <p>Your short URL :</p>
+            <p>Your short URL :&nbsp; </p>
             <div className="input-wrapper">
               <img src="/link.png" alt="" className="input-url-icon" />
               <input
